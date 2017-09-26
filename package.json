@@ -1,0 +1,24 @@
+{
+  "name": "memory-fs-stream",
+  "version": "1.0.0",
+  "description": "Convert memory-fs to stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "concat-stream": "^1.6.0",
+    "memory-fs": "^0.4.1",
+    "mocha": "^3.5.3"
+  },
+  "peerDependencies": {
+    "memory-fs": "^0.4.1"
+  },
+  "dependencies": {
+    "readable-stream": "^2.3.3",
+    "vinyl": "^2.1.0"
+  }
+}
