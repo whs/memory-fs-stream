@@ -49,8 +49,14 @@ class MemoryFsStream extends Readable {
 
 			let contents = dir[basename];
 			if(contents instanceof Buffer){
+				let fullPath = path + basename;
+
+				if(!this.isFiltered(fullPath)){
+					continue;
+				}
+
 				let vinyl = new File({
-					path: path + basename,
+					path: fullPath,
 					contents,
 				});
 				this.push(vinyl);
@@ -58,6 +64,18 @@ class MemoryFsStream extends Readable {
 				this._pumpDir(contents, `${path}${basename}/`);
 			}
 		}
+	}
+
+	isFiltered(path){
+		if(this.opts.filter === undefined){
+			return true;
+		}else if(typeof this.opts.filter === 'function'){
+			return this.opts.filter(path);
+		}else if(Array.isArray(this.opts.filter)){
+			return this.opts.filter.indexOf(path) !== -1;
+		}
+
+		throw new Error('filter option is of unsupported type');
 	}
 }
 

@@ -26,6 +26,9 @@ MemoryFSStream accept a second argument, an option object. Available options are
 
 - root: Use file only from this subfolder. Default to use all files
 - close: Set to false to keep the stream open even after all files have been outputted. Useful when combined with modules that let you swap stream like [duplexify](https://github.com/mafintosh/duplexify)
+- filter: List of files to include, default to all files. Can be specified as:
+  - Array of full file path relative to the root (eg. `['path/to/file']`)
+  - Function which will receive full file path. Returning `true` means the file will be included.
 
 ## License
 memory-fs-stream is licensed under the [MIT License](LICENSE)

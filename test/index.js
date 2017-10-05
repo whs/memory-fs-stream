@@ -57,4 +57,32 @@ describe('MemoryFsStream', function(){
 		};
 		stream.on('data', onData);
 	});
+
+	it('can filter with array', function(cb){
+		let stream = concat((buf) => {
+			expect(buf.length).to.eql(1);
+
+			expect(buf[0].path).to.eql('path/to/another/test.txt');
+			expect(buf[0].contents.toString()).to.eql('b');
+			cb();
+		});
+		new MemoryFsStream(this.fs, {
+			root: '/',
+			filter: ['path/to/another/test.txt'],
+		}).pipe(stream);
+	});
+
+	it('can filter with function', function(cb){
+		let stream = concat((buf) => {
+			expect(buf.length).to.eql(1);
+
+			expect(buf[0].path).to.eql('path/to/another/test.txt');
+			expect(buf[0].contents.toString()).to.eql('b');
+			cb();
+		});
+		new MemoryFsStream(this.fs, {
+			root: '/',
+			filter: (path) => path === 'path/to/another/test.txt',
+		}).pipe(stream);
+	});
 });
